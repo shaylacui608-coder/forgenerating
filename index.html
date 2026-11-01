@@ -10,12 +10,13 @@
   color: #161823;
   font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   font-synthesis: none;
+  --card-border: .5px solid rgba(0,39,78,.05);
   --card-shadow: 0 6px 17px rgba(151,176,211,.10);
 }
 
 * { box-sizing: border-box; }
 html, body { width: 100%; min-height: 100%; margin: 0; }
-body { display: grid; place-items: start center; overflow: hidden; background: #f3f4f6; }
+body { display: grid; place-items: start center; overflow: hidden; background: #fff; }
 button { padding: 0; border: 0; background: none; color: inherit; font: inherit; }
 
 .generation-screen {
@@ -110,6 +111,7 @@ button { padding: 0; border: 0; background: none; color: inherit; font: inherit;
   height: 222.32px;
   margin: 0 auto;
   overflow: hidden;
+  border: var(--card-border);
   border-radius: 20px;
   background: rgba(255,255,255,.96);
   box-shadow: var(--card-shadow);
@@ -202,6 +204,7 @@ button { padding: 0; border: 0; background: none; color: inherit; font: inherit;
   display: flex;
   gap: 14px;
   overflow: hidden;
+  border: var(--card-border);
   border-radius: 20px;
   background: rgba(255,255,255,.97);
   box-shadow: var(--card-shadow);
@@ -252,6 +255,7 @@ button { padding: 0; border: 0; background: none; color: inherit; font: inherit;
   height: 146.42px;
   margin: 0 auto;
   overflow: hidden;
+  border: var(--card-border);
   border-radius: 20px;
   background: rgba(255,255,255,.97);
   box-shadow: var(--card-shadow);
@@ -366,6 +370,7 @@ button { padding: 0; border: 0; background: none; color: inherit; font: inherit;
   grid-auto-rows: 108px;
   gap: 6px;
   overflow: hidden;
+  border: var(--card-border);
   border-radius: 20px;
   background: rgba(255,255,255,.97);
   box-shadow: var(--card-shadow);
