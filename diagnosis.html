@@ -28,10 +28,11 @@ function pulseStars() {
 
   starPaths.forEach((star, index) => {
     const order = movesLeft ? starPaths.length - 1 - index : index;
+    const fadedOpacity = index === 0 ? .82 : .24;
     star.animate([
-      { filter: 'brightness(1)', easing: 'ease-in-out' },
-      { filter: 'brightness(1.18)', offset: .42, easing: 'ease-in-out' },
-      { filter: 'brightness(1)' }
+      { opacity: 1, easing: 'ease-in-out' },
+      { opacity: fadedOpacity, offset: .45, easing: 'ease-in-out' },
+      { opacity: 1 }
     ], { delay: order * 160, duration: 800 });
   });
 }
