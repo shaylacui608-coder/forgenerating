@@ -10,18 +10,23 @@ function updateRows(el,html){const template=document.createElement('template');t
 const frames=[{at:0,count:1},{at:1300,count:2},{at:2600,count:3},{at:4600,count:4},{at:6800,stage:1},{at:7700,stage:2,count:0},{at:9200,stage:2,count:1},{at:10800,stage:2,count:2},{at:12300,stage:3}];let elapsed=0,paused=false,last=0,frame=-1;const duration=15000;
 function render(i){const f=frames[i],stage=f.stage||0,c=f.count||0;const completed=stage===1||stage===3;const success=$('.success');success.style.setProperty('visibility',completed?'visible':'hidden','important');success.style.setProperty('opacity',completed?'1':'0','important');$('.device').classList.toggle('complete',completed);$('.symbol').classList.toggle('is-complete',completed);$('#diagnosis').classList.toggle('collapsed',stage>=2);$('#diagnosis .group-head').setAttribute('aria-expanded',stage<2);$('#optimization').classList.toggle('visible',stage>=2);text($('#title'),stage===3?'智能诊断完成':stage===2?'智能优化中...':stage===1?'智能诊断完成':'智能诊断中...');text($('#subtitle'),stage>=2?(stage===3?'已完成<span class="blue">2</span>项自动优化，1项待手动补充':`正在帮你优化门店素材，已完成<span class="blue">${c}/3</span>项`):`已看完<span class="blue">${c||4}/4</span>项，现在帮你检查相册，马上就好`);icon($('#diagnosisIcon'),stage?'done':'loading');text($('#diagnosisLabel'),stage?'检查完成·已完成4/4项':`检查中·已完成${c}/4项`);const d=[row('外显小图内容清晰，无需优化','done'),row('门店头图信息可优化','warning')];if(stage||c>=4)d.push(row('相册图片主体清晰度可优化','warning'));else d.push(row(c>=3?'检查相册主体是否清晰 3/4....':c===2?'正在检查门店头图信息 2/4....':'正在检查外显小图内容 1/4....','loading'));if(stage||c>=4)d.push(row('推荐菜信息待手动补充','warning'));updateRows($('#diagnosisRows'),d.slice(0,stage||c>=3?d.length:c).join(''));icon($('#optimizationIcon'),stage===3?'done':'loading');text($('#optimizationLabel'),stage===3?'优化完成·2项自动优化，1项待手动补充':`优化中·已完成${c}/3项`);const opt=[];if(c>=1||stage===3)opt.push(row('门店头图已自动优化','done'));if(c>=2||stage===3)opt.push(row('相册图片已自动优化','done'));if(stage===3)opt.push(row('推荐菜信息待手动补充','warning'));else opt.push(row(c===0?'正在优化门店头图信息...':c===1?'正在优化相册图片清晰度...':'正在检查推荐菜信息...','loading'));updateRows($('#optimizationRows'),opt.join(''));}
 const starPaths = document.querySelectorAll('.spark > path');
+const backgroundGlow = $('.glow');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 function pulseStars() {
   if (reducedMotion.matches) return;
 
+  const drift = backgroundGlow.getAnimations().find(animation => animation.animationName === 'glow-bed-flow');
+  const iteration = drift?.effect?.getComputedTiming().currentIteration ?? 0;
+  const movesLeft = iteration % 2 === 1;
+
   starPaths.forEach((star, index) => {
-    const delay = index * 80;
+    const order = movesLeft ? starPaths.length - 1 - index : index;
     star.animate([
-      { filter: 'brightness(1)' },
-      { filter: 'brightness(1.22)', offset: .3 },
+      { filter: 'brightness(1)', easing: 'ease-in-out' },
+      { filter: 'brightness(1.18)', offset: .42, easing: 'ease-in-out' },
       { filter: 'brightness(1)' }
-    ], { delay, duration: 400 - delay, easing: 'ease-in-out' });
+    ], { delay: order * 160, duration: 800 });
   });
 }
 
