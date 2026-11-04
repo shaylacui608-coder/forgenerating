@@ -19,13 +19,13 @@ const sparkArtwork = $('.spark-art');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 function pulseStars() {
-  if (reducedMotion.matches) return;
+  if (reducedMotion.matches || sparkArtwork.getAnimations().length > 0) return;
 
   sparkArtwork.animate([
     { opacity: 1, easing: 'ease-in-out' },
     { opacity: .38, offset: .44, easing: 'ease-in-out' },
     { opacity: 1 }
-  ], { duration: 1240 });
+  ], { duration: 1900 });
 }
 
 function tick(now) {
